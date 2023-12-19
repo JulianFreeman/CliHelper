@@ -14,7 +14,7 @@
 from __future__ import annotations
 from typing import Callable, TypedDict
 
-version = (2, 0, 20231219)
+version = (2, 0, 1, 20231219)
 
 
 def request_input(prompt_msg: str,
@@ -131,9 +131,13 @@ class _OptionNode(object):
         self.exec_func = exec_func if exec_func is not None else self._default_func
         self.args = args if args is not None else ()
         self.kwargs = kwargs if kwargs is not None else {}
-        self.menu_config = menu_config if menu_config is not None else DEFAULT_MENU_CONFIG
         self.children = []  # type: list[_OptionNode]
         self._is_root = _is_root
+
+        self.menu_config = DEFAULT_MENU_CONFIG.copy()
+        # 补充没有的设置
+        if menu_config is not None:
+            self.menu_config.update(menu_config)
 
     @staticmethod
     def _default_func():
@@ -307,4 +311,4 @@ class CliHelper(_OptionNode):
         super().__init__("Main Menu", menu_config=menu_config, _is_root=True)
 
         if show_version:
-            print(f"CliHelper v{version[0]}.{version[1]} ({version[-1]})\n")
+            print(f"CliHelper v{version[0]}.{version[1]}.{version[2]} ({version[-1]})\n")
