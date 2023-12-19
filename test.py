@@ -11,18 +11,31 @@ def new_folder(name):
 
 
 def test_helper():
-    c = CliHelper(right_padding=20, draw_menu_again=False)
-    n = c.add_option(title="New")
-    c.add_option(title="Open File", exec_func=open_file)
-    c.add_option(title="Save")
-    c.add_exit_option()
+    # c = CliHelper(right_padding=20, draw_menu_again=False)
+    # n = c.add_option(title="New")
+    # c.add_option(title="Open File", exec_func=open_file)
+    # c.add_option(title="Save")
+    # c.add_exit_option()
+    #
+    # c.add_return_option(n)
+    # c.add_option(n, "New File")
+    # c.add_option(n, "New Folder", new_folder, ("Temp",))
+    # c.add_exit_option(n)
+    #
+    # c.start_loop()
+    ch = CliHelper()
+    n = ch.add_option("New")
+    n.add_return_option()
+    n.add_option("New File")
+    n.add_option("New Folder", new_folder, ("Temp", ))
+    n.add_exit_option()
 
-    c.add_return_option(n)
-    c.add_option(n, "New File")
-    c.add_option(n, "New Folder", new_folder, ("Temp",))
-    c.add_exit_option(n)
+    ch.add_option("Open File", open_file)
+    ch.add_option("Save")
+    ch.add_exit_option()
 
-    c.start_loop()
+    ch.start_loop()
+    # n.start_loop()
 
 
 def test_req():
